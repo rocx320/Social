@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login"
+    android:orientation="vertical"
+    android:background="#DFBAC7">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aladin"
+        android:paddingBottom="5dp"
+        android:text="@string/logintext"
+        android:textColor="@color/lavender"
+        android:textSize="125sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.216" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:foregroundGravity="center"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.561">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/lavender_border"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="emailAddress"
+                android:drawableStart="@drawable/baseline_email_24"
+                android:hint="@string/email"
+                android:fontFamily="@font/aladin"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:drawablePadding="5dp"
+                android:minHeight="48dp"
+                tools:layout_editor_absoluteX="26dp"
+                tools:layout_editor_absoluteY="319dp" />
+
+
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:drawablePadding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="password"
+                android:drawableStart="@drawable/baseline_lock_24"
+                android:hint="@string/password"
+                android:fontFamily="@font/aladin"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:minHeight="48dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="onLoginClick"
+                android:text="@string/logintext"
+                android:fontFamily="@font/aladin"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/signup_redirect"
+                android:text="@string/signup_prompt"
+                android:layout_gravity="center"
+                android:fontFamily="@font/aladin"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:textColor="@color/lavender"
+                />
+
+        </LinearLayout>
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imageView1"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:srcCompat="@drawable/baseline_lock_24" />-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/imageView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:srcCompat="@drawable/baseline_person_24" />-->
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/google_signin_btn"
+        android:layout_width="48dp"
+        android:layout_height="156dp"
+        android:clickable="true"
+        android:contentDescription="@string/google_sign_in"
+        android:onClick="onGoogleSignInClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.784"
+        app:srcCompat="@drawable/google" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Social</string>
+    <string name="logotext">Social</string>
+    <string name="description">Socialise in a new way!</string>
+    <string name="logintext">Login</string>
+    <string name="google_sign_in">Google Sign-In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="signup_btn">SignUp</string>
+    <string name="login_redirect_prompt">Already an User? Login!</string>
+    <string name="loginText">Login</string>
+    <string name="signup_prompt">Not Registered? Sign Up!</string>
+    <string name="welcome">Welcome!</string>
+    <string name="register">Register</string>
+</resources>

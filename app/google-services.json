@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "959641973840",
+    "project_id": "social-dream-15b90",
+    "storage_bucket": "social-dream-15b90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959641973840:android:0062b6c3f41c428d79cd55",
+        "android_client_info": {
+          "package_name": "com.example.social"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959641973840-mg178qt4ifvg6au1m1t10hvb6b62ha68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9RjTF20wDvqkJ7eTu2cMzxKh-4dOr2DM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959641973840-mg178qt4ifvg6au1m1t10hvb6b62ha68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
