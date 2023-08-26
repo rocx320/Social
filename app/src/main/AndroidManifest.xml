@@ -11,21 +11,15 @@
         android:roundIcon="@drawable/social_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Social"
-        tools:targetApi="31">
+        tools:targetApi="33">
+        <activity
+            android:name=".FragActivity"
+            android:exported="false" />
         <activity
             android:name=".RegisterMain"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Signup"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
-            android:exported="false" />
-        <activity
-            android:name=".Register"
             android:exported="false" />
         <activity
             android:name=".splash"
@@ -37,8 +31,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:name=".HomeScreen"
+            android:exported="false"
+            android:label="Home"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen" />
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

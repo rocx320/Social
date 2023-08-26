@@ -5,9 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
     android:orientation="vertical"
-    android:background="#DFBAC7">
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/textView"
@@ -58,7 +57,7 @@
                 android:drawablePadding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="emailAddress"
+                android:autofillHints="name"
                 android:drawableStart="@drawable/baseline_person_24"
                 android:hint="@string/name"
                 android:fontFamily="@font/aladin"
@@ -87,7 +86,7 @@
                 android:id="@+id/signup_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="emailAddress"
+                android:autofillHints="username"
                 android:drawableStart="@drawable/baseline_person_pin_24"
                 android:drawablePadding="5dp"
                 android:hint="@string/username"
@@ -121,17 +120,6 @@
                 android:fontFamily="@font/aladin"
                 android:textSize="18sp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/signup_redirect"
-                android:text="@string/login_redirect_prompt"
-                android:layout_gravity="center"
-                android:fontFamily="@font/aladin"
-                android:layout_marginTop="10dp"
-                android:textSize="18sp"
-                android:textColor="@color/lavender"
-                />
 
         </LinearLayout>
 

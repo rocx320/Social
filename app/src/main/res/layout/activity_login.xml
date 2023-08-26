@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
+    tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:background="#DFBAC7">
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/textView"
@@ -55,7 +55,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
-                android:id="@+id/editTextEmail"
+                android:id="@+id/login_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="emailAddress"
@@ -70,16 +70,15 @@
                 tools:layout_editor_absoluteY="319dp" />
 
 
-
             <EditText
-                android:id="@+id/editTextPassword"
-                android:drawablePadding="5dp"
+                android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="password"
                 android:drawableStart="@drawable/baseline_lock_24"
-                android:hint="@string/password"
+                android:drawablePadding="5dp"
                 android:fontFamily="@font/aladin"
+                android:hint="@string/password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:minHeight="48dp" />
@@ -88,7 +87,6 @@
                 android:id="@+id/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:onClick="onLoginClick"
                 android:text="@string/logintext"
                 android:fontFamily="@font/aladin"
                 android:textSize="18sp"/>
@@ -107,32 +105,21 @@
 
         </LinearLayout>
 
-        <!--        <ImageView-->
-        <!--            android:id="@+id/imageView1"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:srcCompat="@drawable/baseline_lock_24" />-->
-        <!--        <ImageView-->
-        <!--            android:id="@+id/imageView"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:srcCompat="@drawable/baseline_person_24" />-->
     </androidx.cardview.widget.CardView>
 
-    <ImageView
-        android:id="@+id/google_signin_btn"
-        android:layout_width="48dp"
-        android:layout_height="156dp"
-        android:clickable="true"
-        android:contentDescription="@string/google_sign_in"
-        android:onClick="onGoogleSignInClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.784"
-        app:srcCompat="@drawable/google" />
+<!--    <ImageView-->
+<!--        android:id="@+id/google_signin_btn"-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="156dp"-->
+<!--        android:clickable="true"-->
+<!--        android:contentDescription="@string/google_sign_in"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.784"-->
+<!--        app:srcCompat="@drawable/google" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
