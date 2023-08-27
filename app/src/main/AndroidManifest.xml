@@ -13,6 +13,15 @@
         android:theme="@style/Theme.Social"
         tools:targetApi="33">
         <activity
+            android:name=".ResultDialog"
+            android:exported="false" />
+        <activity
+            android:name=".TicTacToe"
+            android:exported="false" />
+        <activity
+            android:name=".LaunchFragment"
+            android:exported="false" />
+        <activity
             android:name=".FragActivity"
             android:exported="false" />
         <activity

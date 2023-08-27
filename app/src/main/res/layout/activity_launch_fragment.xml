@@ -14,8 +14,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/fragment_view"
-        android:background="@color/background"/>
+        android:id="@+id/container"
+        android:background="@color/background"
+        android:name="com.example.social.ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
 
 
     <com.google.android.material.bottomappbar.BottomAppBar

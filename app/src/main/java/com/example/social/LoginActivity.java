@@ -109,9 +109,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     // Username exists, proceed to home screen
+                    Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, HomeScreen.class);
                     intent.putExtra("username", uname);
                     startActivity(intent);
+                    finish();
                 } else {
                     // Username does not exist, show error message or handle accordingly
                     Toast.makeText(LoginActivity.this, "Invalid username", Toast.LENGTH_SHORT).show();

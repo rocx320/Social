@@ -1,10 +1,10 @@
 package com.example.social;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -155,8 +155,19 @@ public class HomeScreen extends AppCompatActivity {
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you bored? Let's do something fun!")
-                .setPositiveButton("Yes", (dialog, id) -> Toast.makeText(HomeScreen.this, "Will add Feature in Future Thank You", Toast.LENGTH_SHORT).show());
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(HomeScreen.this, TicTacToe.class));
+                    }
+                })
 
+        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(HomeScreen.this, LaunchFragment.class));
+            }
+        });
         AlertDialog dialog = builder.create();
         dialog.show();
     }
