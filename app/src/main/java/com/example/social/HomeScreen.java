@@ -1,8 +1,8 @@
 package com.example.social;
 
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,40 +10,64 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class HomeScreen extends AppCompatActivity {
 
     TextView quote;
     TextView greetingTextView;
-
-
+    TextView nameUser;
     FloatingActionButton bored;
 
-    private DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homescreen);
 
+        nameUser = findViewById(R.id.username);
         quote = findViewById(R.id.quote);
         greetingTextView = findViewById(R.id.greetingTextView);
         bored = findViewById(R.id.bored_click);
 
-        final TextView username = findViewById(R.id.username);
+        bored.setOnClickListener(v -> showAlertDialog());
+        greetingText();
 
+        showUserData();
+
+
+
+//        if (currentUser != null) {
+//            userId = currentUser.getUid();
+//            // Now you have the user's ID (userId)
+//
+//            Query checkUserDatabase = ref.orderByChild(userId).equalTo(userId);
+////            ref = ref.child("users").child(userId).child("name");
+//
+//            checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    if (snapshot.exists()) {
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//
+//        } else {
+//            // User is not authenticated
+//        }
+
+/*
+        final TextView username = findViewById(R.id.username);
 
         ref = FirebaseDatabase.getInstance().getReference();
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+
 
         String userId = null;
         if (currentUser != null) {
@@ -84,24 +108,7 @@ public class HomeScreen extends AppCompatActivity {
             });
         }
 
-
-        // Greetings Text
-
-        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-
-        String greeting;
-        if (currentHour >= 0 && currentHour < 12) {
-            greeting = "Good Morning!";
-        } else if (currentHour >= 12 && currentHour < 18) {
-            greeting = "Good Afternoon!";
-        } else {
-            greeting = "Good Evening!";
-        }
-
-        // Set the greeting in the TextView
-        greetingTextView.setText(greeting);
-
-        bored.setOnClickListener(v -> showAlertDialog());
+*/
 
 
         /*
@@ -119,6 +126,30 @@ public class HomeScreen extends AppCompatActivity {
         fragmentTransaction.commit();
 
          */
+    }
+
+    public void showUserData(){
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+
+        nameUser.setText(username);
+    }
+
+    // Greetings Text
+    private void greetingText() {
+        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+        String greeting;
+        if (currentHour >= 0 && currentHour < 12) {
+            greeting = "Good Morning!";
+        } else if (currentHour >= 12 && currentHour < 18) {
+            greeting = "Good Afternoon!";
+        } else {
+            greeting = "Good Evening!";
+        }
+
+        // Set the greeting in the TextView
+        greetingTextView.setText(greeting);
     }
 
     private void showAlertDialog() {
@@ -180,10 +211,10 @@ public class HomeScreen extends AppCompatActivity {
     
      */
 
-        @Override
-        protected void onResume() {
-            super.onResume();
-            quote.setText(Quotes.getRandomQuote());
-        }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        quote.setText(Quotes.getRandomQuote());
     }
+
+}

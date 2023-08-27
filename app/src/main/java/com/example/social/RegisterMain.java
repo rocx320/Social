@@ -21,8 +21,10 @@ public class RegisterMain extends AppCompatActivity {
     FirebaseDatabase db;
     DatabaseReference ref;
 
-    EditText email ;
+    EditText email;
     EditText password;
+
+    EditText name;
 
     EditText username;
     Button register;
@@ -33,6 +35,7 @@ public class RegisterMain extends AppCompatActivity {
         setContentView(R.layout.activity_register_main);
 
         email = findViewById(R.id.signup_email);
+        name = findViewById(R.id.signup_name);
         username = findViewById(R.id.signup_username);
         password = findViewById(R.id.signup_password);
         register = findViewById(R.id.signup_btn);
@@ -40,39 +43,38 @@ public class RegisterMain extends AppCompatActivity {
         ref = FirebaseDatabase.getInstance().getReference();
 
 
-
-
         register.setOnClickListener(v -> {
 
             String txt_username = username.getText().toString();
             String txt_email = email.getText().toString();
             String txt_pass = password.getText().toString();
+            String txt_name = name.getText().toString();
+
 
             auth = FirebaseAuth.getInstance();
 
-            User newUser = new User(txt_username);
+            User newUser = new User(txt_name, txt_email, txt_username, txt_pass);
 
-            if(TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_pass)){
+            if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_pass)) {
                 Toast.makeText(RegisterMain.this, "Empty Credentials", Toast.LENGTH_SHORT).show();
-            }else if(txt_pass.length() < 6){
+            } else if (txt_pass.length() < 6) {
                 Toast.makeText(RegisterMain.this, "Password too short!", Toast.LENGTH_SHORT).show();
-            }else{
-                registerUser(txt_email,txt_pass);
+            } else {
+                registerUser(txt_email, txt_pass);
                 String userId = ref.child("users").push().getKey();
-                ref.child("users").child(userId).setValue(newUser);
+                ref.child("users").child(txt_name).setValue(newUser);
             }
-
         });
     }
 
     private void registerUser(String txtEmail, String txtPass) {
-        auth.createUserWithEmailAndPassword(txtEmail,txtPass).
+        auth.createUserWithEmailAndPassword(txtEmail, txtPass).
                 addOnCompleteListener(RegisterMain.this, task -> {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         Toast.makeText(RegisterMain.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterMain.this, LoginActivity.class));
                         finish();
-                    }else{
+                    } else {
                         Toast.makeText(RegisterMain.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -103,7 +105,6 @@ public class RegisterMain extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
 
 
 }
