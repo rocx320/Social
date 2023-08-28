@@ -13,10 +13,13 @@
         android:theme="@style/Theme.Social"
         tools:targetApi="33">
         <activity
-            android:name=".ResultDialog"
+            android:name=".surprise.AddPlayers"
             android:exported="false" />
         <activity
-            android:name=".TicTacToe"
+            android:name=".surprise.ResultDialog"
+            android:exported="false" />
+        <activity
+            android:name=".surprise.TicTacToe"
             android:exported="false" />
         <activity
             android:name=".LaunchFragment"

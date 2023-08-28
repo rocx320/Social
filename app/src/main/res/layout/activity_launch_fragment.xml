@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/background"
-    tools:context=".FragActivity">
+    android:backgroundTint="@color/background">
 
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/container"
         android:background="@color/background"
-        android:name="com.example.social.ProfileFragment"
+        android:name="com.example.social.fragments.ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 
 

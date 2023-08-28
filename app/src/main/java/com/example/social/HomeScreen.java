@@ -1,14 +1,16 @@
 package com.example.social;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.social.extra.Quotes;
+import com.example.social.surprise.AddPlayers;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HomeScreen extends AppCompatActivity {
@@ -18,12 +20,15 @@ public class HomeScreen extends AppCompatActivity {
     TextView nameUser;
     FloatingActionButton bored;
 
+    Button logout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homescreen);
 
+        logout = findViewById(R.id.logout);
         nameUser = findViewById(R.id.username);
         quote = findViewById(R.id.quote);
         greetingTextView = findViewById(R.id.greetingTextView);
@@ -34,6 +39,7 @@ public class HomeScreen extends AppCompatActivity {
 
         showUserData();
 
+        logout.setOnClickListener(v -> showLogoutConfirmationDialog());
 
 
 //        if (currentUser != null) {
@@ -128,7 +134,24 @@ public class HomeScreen extends AppCompatActivity {
          */
     }
 
-    public void showUserData(){
+    private void showLogoutConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Log Out")
+                .setMessage("Are you sure you want to log out?")
+                .setPositiveButton("Log Out", (dialog, which) -> {
+                    // Perform logout operation
+                    // For example, clear user session, navigate to login screen, etc.
+                    startActivity(new Intent(HomeScreen.this, LoginActivity.class));
+                    finish();
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    // Dismiss the dialog
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    public void showUserData() {
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
 
@@ -155,19 +178,9 @@ public class HomeScreen extends AppCompatActivity {
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you bored? Let's do something fun!")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(HomeScreen.this, TicTacToe.class));
-                    }
-                })
+                .setPositiveButton("Yes", (dialog, which) -> startActivity(new Intent(HomeScreen.this, AddPlayers.class)))
 
-        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(HomeScreen.this, LaunchFragment.class));
-            }
-        });
+                .setNegativeButton("No", (dialog, which) -> startActivity(new Intent(HomeScreen.this, LaunchFragment.class)));
         AlertDialog dialog = builder.create();
         dialog.show();
     }

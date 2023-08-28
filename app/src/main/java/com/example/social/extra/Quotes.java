@@ -1,4 +1,4 @@
-package com.example.social;
+package com.example.social.extra;
 
 import java.util.Random;
 

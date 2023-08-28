@@ -1,4 +1,4 @@
-package com.example.social;
+package com.example.social.surprise;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.example.social.R;
 
 public class ResultDialog extends Dialog {
 

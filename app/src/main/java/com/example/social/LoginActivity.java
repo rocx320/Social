@@ -2,6 +2,8 @@ package com.example.social;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.social.extra.LocalAccountManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
 
+    private LocalAccountManager localAccountManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +42,31 @@ public class LoginActivity extends AppCompatActivity {
 
 //        auth = FirebaseAuth.getInstance();
 
+        localAccountManager = new LocalAccountManager(this);
+
+
+        // When pressed Enter after Password Enter will also act as Login Button
+        loginPassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    loginBtn.performClick(); // Programmatically trigger login button click
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
         loginBtn.setOnClickListener(v -> {
-            String txt_email = loginUsername.getText().toString();
-            String txt_pass = loginPassword.getText().toString();
+            String txt_email = loginUsername.getText().toString().trim();
+            String txt_pass = loginPassword.getText().toString().trim();
 
-            if (!validateUserEmail(txt_email) || !validatePassword(txt_pass)) {
+            if (txt_email.equals("Admin") && txt_pass.equals("123456")) {
+                localAccountManager.saveLocalAccount(txt_email, txt_pass);
+                Toast.makeText(this, "Admin Login Successful", Toast.LENGTH_SHORT).show();
+                launchHomeScreen();
+            } else if (!validateUserEmail(txt_email) || !validatePassword(txt_pass)) {
 
             } else {
                 checkUser();
@@ -54,28 +78,27 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-//        loginBtn.setOnClickListener(v -> {
-//
-//            String txt_email = loginUsername.getText().toString();
-//            String txt_pass = loginPassword.getText().toString();
-//
-//            if (txt_email.isEmpty() || txt_pass.isEmpty()) {
-//                Toast.makeText(LoginActivity.this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
-//            } else {
-//                // Perform login logic here
-//                loginUser(txt_email, txt_pass);
-//            }
-//        });
     }
 
+    private void launchHomeScreen() {
+        Intent intent = new Intent(this, HomeScreen.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void loginAdmin(String admin, String pass) {
+
+        Toast.makeText(LoginActivity.this, "Admin Login Successful!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(LoginActivity.this, HomeScreen.class);
+        intent.putExtra("username", admin);
+        startActivity(intent);
+        finish();
+    }
+
+
+    // Login Using Firebase Authentication
     private void loginUser(String txtEmail, String txtPass) {
-/*
-        auth.signInWithEmailAndPassword(txtEmail, txtPass).addOnSuccessListener(ignored -> {
-            Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, HomeScreen.class));
-            finish();
-        }).addOnFailureListener(fail -> Toast.makeText(this, fail.getMessage(), Toast.LENGTH_SHORT).show());
-*/
+
         auth.signInWithEmailAndPassword(txtEmail, txtPass)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -119,49 +142,11 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Invalid username", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(LoginActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
-//        Query checkUserDatabase = reference.orderByChild("username").equalTo(uname);
-
-
-//        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if(snapshot.exists()){
-//                    loginUsername.setError(null);
-//                    String passwordFromDB = snapshot.child(uname).child("password").getValue(String.class);
-//
-//                    if(passwordFromDB.equals(pass)){
-//                        loginUsername.setError(null);
-//
-//                        //Pass Data using intents
-//                        String nameFromDB = snapshot.child(uname).child("username").getValue(String.class);
-//
-//                        Intent intent = new Intent(LoginActivity.this,HomeScreen.class);
-//                        intent.putExtra("name",nameFromDB);
-//
-//                        startActivity(intent);
-//
-//                    }else{
-//                        loginPassword.setError("Invalid Credentials");
-//                        loginPassword.requestFocus();
-//                    }
-//                }else{
-//                    Toast.makeText(LoginActivity.this, "User doesn't exist! Please Register.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
     }
 

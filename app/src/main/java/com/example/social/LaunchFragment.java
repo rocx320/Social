@@ -6,6 +6,11 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.social.fragments.ActivityFragment;
+import com.example.social.fragments.AlertFragment;
+import com.example.social.fragments.MsgFragment;
+import com.example.social.fragments.NewPostFragment;
+import com.example.social.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
