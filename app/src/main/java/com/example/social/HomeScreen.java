@@ -41,82 +41,6 @@ public class HomeScreen extends AppCompatActivity {
 
         logout.setOnClickListener(v -> showLogoutConfirmationDialog());
 
-
-//        if (currentUser != null) {
-//            userId = currentUser.getUid();
-//            // Now you have the user's ID (userId)
-//
-//            Query checkUserDatabase = ref.orderByChild(userId).equalTo(userId);
-////            ref = ref.child("users").child(userId).child("name");
-//
-//            checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if (snapshot.exists()) {
-//
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
-//
-//        } else {
-//            // User is not authenticated
-//        }
-
-/*
-        final TextView username = findViewById(R.id.username);
-
-        ref = FirebaseDatabase.getInstance().getReference();
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-
-        String userId = null;
-        if (currentUser != null) {
-            userId = currentUser.getUid();
-            // Now you have the user's ID (userId)
-
-            ref = ref.child("users").child(userId).child("username");
-        } else {
-            // User is not authenticated
-        }
-
-        if (userId != null) {
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        String username = dataSnapshot.getValue(String.class);
-
-                        if (username != null) {
-                            // Update the TextView with the username
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    TextView usernameTextView = findViewById(R.id.username);
-                                    usernameTextView.setText(username);
-                                }
-                            });
-                        }
-                    }
-                }
-
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Handle error
-                    Log.e("FirebaseError", "Error fetching username: " + databaseError.getMessage());
-                }
-            });
-        }
-
-*/
-
-
         /*
         actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -138,7 +62,7 @@ public class HomeScreen extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Log Out")
                 .setMessage("Are you sure you want to log out?")
-                .setPositiveButton("Log Out", (dialog, which) -> {
+                .setPositiveButton("Yes", (dialog, which) -> {
                     // Perform logout operation
                     // For example, clear user session, navigate to login screen, etc.
                     startActivity(new Intent(HomeScreen.this, LoginActivity.class));
@@ -154,7 +78,6 @@ public class HomeScreen extends AppCompatActivity {
     public void showUserData() {
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
-
         nameUser.setText(username);
     }
 

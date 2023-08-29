@@ -7,15 +7,15 @@
     android:backgroundTint="@color/background">
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/container"
+        android:name="com.example.social.fragments.ProfileFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/background"
         app:layout_constraintBottom_toTopOf="@+id/bottom_appbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/container"
-        android:background="@color/background"
-        android:name="com.example.social.fragments.ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 
 
@@ -25,8 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:backgroundTint="@color/background"
-        android:paddingTop="5dp"
-        android:paddingBottom="25dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

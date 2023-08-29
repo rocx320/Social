@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CAMERA"
+        tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Social"
         tools:targetApi="33">
+        <activity
+            android:name=".profile.updateProfile"
+            android:exported="false" />
         <activity
             android:name=".surprise.AddPlayers"
             android:exported="false" />
@@ -24,9 +36,7 @@
         <activity
             android:name=".LaunchFragment"
             android:exported="false" />
-        <activity
-            android:name=".FragActivity"
-            android:exported="false" />
+
         <activity
             android:name=".RegisterMain"
             android:exported="false" />

@@ -3,7 +3,6 @@ package com.example.social;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,22 +39,31 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.login_btn);
         signupRedirectText = findViewById(R.id.signup_redirect);
 
-//        auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         localAccountManager = new LocalAccountManager(this);
 
 
         // When pressed Enter after Password Enter will also act as Login Button
-        loginPassword.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    loginBtn.performClick(); // Programmatically trigger login button click
-                    return true;
-                }
-                return false;
+        loginPassword.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                loginBtn.performClick(); // Programmatically trigger login button click
+                return true;
             }
+            return false;
         });
+
+        //Firebase Authentication Login
+
+//        loginBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String txt_email = loginUsername.getText().toString().trim();
+//                String txt_pass = loginPassword.getText().toString().trim();
+//
+//                loginUser(txt_email,txt_pass);
+//            }
+//        });
 
 
         loginBtn.setOnClickListener(v -> {
@@ -76,6 +84,8 @@ public class LoginActivity extends AppCompatActivity {
         signupRedirectText.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterMain.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
         });
 
     }
@@ -86,14 +96,14 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private void loginAdmin(String admin, String pass) {
-
-        Toast.makeText(LoginActivity.this, "Admin Login Successful!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(LoginActivity.this, HomeScreen.class);
-        intent.putExtra("username", admin);
-        startActivity(intent);
-        finish();
-    }
+//    private void loginAdmin(String admin, String pass) {
+//
+//        Toast.makeText(LoginActivity.this, "Admin Login Successful!", Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(LoginActivity.this, HomeScreen.class);
+//        intent.putExtra("username", admin);
+//        startActivity(intent);
+//        finish();
+//    }
 
 
     // Login Using Firebase Authentication
@@ -142,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Invalid username", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(LoginActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
@@ -170,5 +181,7 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+
+
 
 }

@@ -2,7 +2,53 @@ package com.example.social.extra;
 
 public class User {
 
+    private String profileImageUrl;
+    private String gender;
+    private String birthdate;
     private String username;
+    private String email;
+    private String name;
+    private String password;
+
+    public User(String name, String email, String username, String password) {
+        this.username = username;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
+
+    public User(String profileImageUrl, String gender, String birthdate) {
+        this.profileImageUrl = profileImageUrl;
+        this.gender = gender;
+        this.birthdate = birthdate;
+    }
+
+    public User() {
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
 
     public String getUsername() {
         return username;
@@ -34,21 +80,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    private String email;
-    private String name;
-
-    public User(String name, String email, String username, String password) {
-        this.username = username;
-        this.email = email;
-        this.name = name;
-        this.password = password;
-    }
-
-    private String password;
-
-
-    public User() {
     }
 }
