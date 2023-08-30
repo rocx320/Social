@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.social.extra.LocalAccountManager;
+import com.example.social.extra.UserUtil;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +28,9 @@ public class LoginActivity extends AppCompatActivity {
     TextView signupRedirectText;
 
     FirebaseAuth auth;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userId = user.getUid();
 
     private LocalAccountManager localAccountManager;
 
@@ -77,7 +82,8 @@ public class LoginActivity extends AppCompatActivity {
             } else if (!validateUserEmail(txt_email) || !validatePassword(txt_pass)) {
 
             } else {
-                checkUser();
+//                checkUser();
+                loginUser(txt_email, txt_pass);
             }
         });
 
@@ -87,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
         });
-
     }
 
     private void launchHomeScreen() {
@@ -135,8 +140,13 @@ public class LoginActivity extends AppCompatActivity {
         String pass = loginPassword.getText().toString().trim();
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-
         DatabaseReference usersRef = ref.child("users");
+
+        if (user != null) {
+            String userId = user.getUid();
+            UserUtil.setUserId(userId);
+        }
+
         usersRef.orderByChild("username").equalTo(uname).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -181,7 +191,6 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
-
 
 
 }

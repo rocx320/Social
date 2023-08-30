@@ -5,13 +5,23 @@ import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.social.extra.CharacterRemovalUtil;
 import com.example.social.extra.Quotes;
 import com.example.social.surprise.AddPlayers;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -19,8 +29,11 @@ public class HomeScreen extends AppCompatActivity {
     TextView greetingTextView;
     TextView nameUser;
     FloatingActionButton bored;
-
     Button logout;
+
+    FirebaseAuth auth;
+    FirebaseUser user;
+    DatabaseReference userRef;
 
 
     @Override
@@ -40,6 +53,30 @@ public class HomeScreen extends AppCompatActivity {
         showUserData();
 
         logout.setOnClickListener(v -> showLogoutConfirmationDialog());
+
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
+
+        if (user != null) {
+            String email = user.getEmail();
+            userRef = FirebaseDatabase.getInstance().getReference().child("users").child(CharacterRemovalUtil.removeCharacters(email));
+            userRef.child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String userName = snapshot.getValue(String.class);
+
+                        // Display the name in the TextView
+                        nameUser.setText(userName);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
 
         /*
         actionBar = getSupportActionBar();
@@ -76,9 +113,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void showUserData() {
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-        nameUser.setText(username);
+        Toast.makeText(this, "Making sure it works now!", Toast.LENGTH_SHORT).show();
     }
 
     // Greetings Text

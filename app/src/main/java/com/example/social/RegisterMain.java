@@ -2,7 +2,6 @@ package com.example.social;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -11,19 +10,29 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.social.extra.CharacterRemovalUtil;
 import com.example.social.extra.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterMain extends AppCompatActivity {
     FirebaseAuth auth;
-    DatabaseReference ref;
+    FirebaseUser user;
+
+    DatabaseReference databaseReference;
+    DatabaseReference userRef;
+
     EditText email, password, name, username;
     Button register;
 
-    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-    SharedPreferences.Editor editor = sharedPreferences.edit();
+    String userId;
+
+//    String userId = UserUtil.getUserId();
+
+//    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+//    SharedPreferences.Editor editor = sharedPreferences.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +45,9 @@ public class RegisterMain extends AppCompatActivity {
         password = findViewById(R.id.signup_password);
         register = findViewById(R.id.signup_btn);
 
-        ref = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
-
+        user = auth.getCurrentUser();
 
         register.setOnClickListener(v -> {
 
@@ -47,8 +56,10 @@ public class RegisterMain extends AppCompatActivity {
             String txt_pass = password.getText().toString();
             String txt_name = name.getText().toString();
 
-            editor.putString("username",txt_username);
-            editor.putString("name",txt_name);
+            String email = CharacterRemovalUtil.removeCharacters(txt_email);
+
+//            editor.putString("username",txt_username);
+//            editor.putString("name",txt_name);
 
             User newUser = new User(txt_name, txt_email, txt_username, txt_pass);
 
@@ -59,13 +70,24 @@ public class RegisterMain extends AppCompatActivity {
             } else {
                 // User Registration using Firebase Authentication
                 registerUser(txt_email, txt_pass);
+                storeToDB(email,txt_name,txt_username,txt_pass);
 //                String userId = ref.child("users").push().getKey();
-                ref.child("users").child(txt_username).setValue(newUser);
-                Toast.makeText(RegisterMain.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(RegisterMain.this, LoginActivity.class));
-                finish();
+//                ref.child("users").child(userId).setValue(newUser);
             }
         });
+    }
+
+    private void storeToDB(String email ,String name, String username, String password) {
+
+        if (user != null) {
+            userId = user.getUid();
+        }
+        userRef = databaseReference.child("users").child(email);
+
+        userRef.child("name").setValue(name);
+        userRef.child("username").setValue(username);
+        userRef.child("password").setValue(password);
+
     }
 
     // Registration Using Firebase Authentication
@@ -73,7 +95,9 @@ public class RegisterMain extends AppCompatActivity {
         auth.createUserWithEmailAndPassword(txtEmail, txtPass).
                 addOnCompleteListener(RegisterMain.this, task -> {
                     if (task.isSuccessful()) {
-
+                        Toast.makeText(RegisterMain.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RegisterMain.this, LoginActivity.class));
+                        finish();
                     } else {
                         Toast.makeText(RegisterMain.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
                     }

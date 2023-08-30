@@ -33,9 +33,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class updateProfile extends AppCompatActivity {
 
-    private TextView showName,showUname;
+    private TextView showName, showUname;
     private ImageView profileImageView;
     private RadioGroup genderRadioGroup;
     private Button editEmail, editDob;
@@ -48,6 +51,7 @@ public class updateProfile extends AppCompatActivity {
     private DatabaseReference userReference;
     private FirebaseUser currentUser;
     private StorageReference storageReference;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class updateProfile extends AppCompatActivity {
 
         userReference = FirebaseDatabase.getInstance().getReference("users");
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(currentUser!=null){ userId = currentUser.getUid(); };
 
         editEmail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,24 +101,26 @@ public class updateProfile extends AppCompatActivity {
             }
         });
 
-        userReference.child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+        userReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = snapshot.getValue(String.class);
                 showName.setText(name);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
-        userReference.child("username").child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+        userReference.child(userId).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String uname = snapshot.getValue(String.class);
                 showUname.setText(uname);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -126,7 +134,7 @@ public class updateProfile extends AppCompatActivity {
         if (selectedImageUri != null && currentUser != null) {
             // Upload profile picture to Firebase Storage
 
-            StorageReference imageRef = storageReference.child("username");
+            StorageReference imageRef = storageReference.child(userId);
             imageRef.putFile(selectedImageUri)
                     .addOnSuccessListener(taskSnapshot -> {
                         // Get the download URL
@@ -134,7 +142,7 @@ public class updateProfile extends AppCompatActivity {
                             // Update profile details in the database
                             String profileImageUrl = uri.toString();
                             // You can also update other profile details here
-                            userReference.child("username").child("profileImageUrl").setValue(profileImageUrl);
+                            userReference.child(userId).child("profileImageUrl").setValue(profileImageUrl);
                         });
                     })
                     .addOnFailureListener(e -> {
@@ -175,8 +183,8 @@ public class updateProfile extends AppCompatActivity {
                 String birthday = String.format("%02d-%02d-%04d", month, day, year);
 
                 // Update the birthday in the database
-                Toast.makeText(updateProfile.this, "Date of Birth Updated Successfully!", Toast.LENGTH_SHORT).show();
-                userReference.child(currentUser.getUid()).child("birthday").setValue(birthday);
+                Toast.makeText(updateProfile.this, "Birthday Updated!", Toast.LENGTH_SHORT).show();
+                userReference.child(userId).child("DOB").setValue(birthday);
                 dialog.dismiss();
             }
         });
@@ -193,23 +201,24 @@ public class updateProfile extends AppCompatActivity {
         // Pre-fill the email EditText with the current user's email
 //        emailEditText.setText(currentUser.getEmail());
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String newEmail = emailEditText.getText().toString();
-                if (!newEmail.isEmpty()) {
-                    currentUser.updateEmail(newEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                // Update the email in the database
-                                Toast.makeText(updateProfile.this, "Email Updated Successfully!", Toast.LENGTH_SHORT).show();
-                                userReference.child(currentUser.getUid()).child("email").setValue(newEmail);
-                                dialog.dismiss();
-                            }
+        saveButton.setOnClickListener(v -> {
+
+            String newEmail = emailEditText.getText().toString();
+            Map<String, Object> updateData = new HashMap<>();
+            updateData.put("email", newEmail);
+
+            if (!newEmail.isEmpty()) {
+                userReference.child(userId).updateChildren(updateData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // Update the email in the database
+                            Toast.makeText(updateProfile.this, "Email Updated Successfully!", Toast.LENGTH_SHORT).show();
+//                            userReference.child(userId).child("email").setValue(newEmail);
+                            dialog.dismiss();
                         }
-                    });
-                }
+                    }
+                });
             }
         });
 
@@ -225,24 +234,22 @@ public class updateProfile extends AppCompatActivity {
             RadioButton selectedRadioButton = findViewById(selectedId);
             String gender = selectedRadioButton.getText().toString();
 
-            if (currentUser != null) {
-                String userId = currentUser.getUid();
-                userReference.child(userId).child("gender").setValue(gender)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Data saved successfully
-                                Toast.makeText(updateProfile.this, "Profile updated!", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Handle failure
-                                Toast.makeText(updateProfile.this, "Failed to update profile.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
+            userReference.child(userId).child("gender").setValue(gender)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            // Data saved successfully
+                            Toast.makeText(updateProfile.this, "Profile updated!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Handle failure
+                            Toast.makeText(updateProfile.this, "Failed to update profile.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
         }
 
     }
@@ -250,6 +257,6 @@ public class updateProfile extends AppCompatActivity {
     public void showUserData() {
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
-        showUname.setText("@"+username);
+        showUname.setText("@" + username);
     }
 }
