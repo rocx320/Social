@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText loginUsername, loginPassword;
@@ -30,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth auth;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String userId = user.getUid();
+    String userId = user != null ? user.getUid() : null;
 
     private LocalAccountManager localAccountManager;
 
@@ -124,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         // Sign in failed
                         if (task.getException() != null &&
-                                task.getException().getMessage().contains("no user record")) {
+                                Objects.requireNonNull(task.getException().getMessage()).contains("no user record")) {
                             // User doesn't exist
                             Toast.makeText(LoginActivity.this, "User does not exist, Register now!", Toast.LENGTH_SHORT).show();
                         } else {

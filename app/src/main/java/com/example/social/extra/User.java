@@ -18,13 +18,22 @@ public class User {
         this.password = password;
     }
 
-    public User(String profileImageUrl, String gender, String birthdate) {
+    public User(String name, String email, String username, String password, String profileImageUrl, String gender, String birthdate) {
+        this.username = username;
+        this.email = email;
+        this.name = name;
+        this.password = password;
         this.profileImageUrl = profileImageUrl;
         this.gender = gender;
         this.birthdate = birthdate;
     }
 
     public User() {
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public String getProfileImageUrl() {

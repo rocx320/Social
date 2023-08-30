@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/baseline_person_pin_24"
-                android:hint="@string/username"
+                android:hint="@string/email"
                 android:fontFamily="@font/aladin"
                 android:imeOptions="actionNext"
                 android:inputType="text"
