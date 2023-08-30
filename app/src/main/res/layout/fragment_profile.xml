@@ -70,6 +70,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/aladin"
+                    android:textColor="@color/lavender"
                     android:hint="Full Name"
                     android:textAlignment="center"
                     android:textAllCaps="true"
@@ -79,6 +80,7 @@
                 <TextView
                     android:id="@+id/Home_usernameView"
                     android:layout_width="wrap_content"
+                    android:textColor="@color/lavender"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
@@ -90,6 +92,7 @@
 
                 <TextView
                     android:id="@+id/Home_emailView"
+                    android:textColor="@color/lavender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -105,6 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:textColor="@color/lavender"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/aladin"
                     android:hint="Birthday"
@@ -116,6 +120,7 @@
                     android:id="@+id/Home_genderView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/lavender"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/aladin"

@@ -1,10 +1,12 @@
-package com.example.social;
+package com.example.social.chat;
 
 import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.social.R;
 
 import java.util.ArrayList;
 import java.util.List;

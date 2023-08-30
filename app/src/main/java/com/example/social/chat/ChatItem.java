@@ -1,4 +1,4 @@
-package com.example.social;
+package com.example.social.chat;
 
 public class ChatItem {
     private int profileImageRes;
