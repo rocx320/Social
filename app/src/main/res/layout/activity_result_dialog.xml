@@ -20,7 +20,7 @@
             android:gravity="center"
             android:text="Results"
             android:fontFamily="@font/aladin"
-            android:textColor="@color/lavender"
+            android:textColor="@color/themeColor"
             android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -37,7 +37,7 @@
             android:text="Start Again"
             android:fontFamily="@font/aladin"
             android:layout_margin="20dp"
-            android:textColor="@color/lavender"
+            android:textColor="@color/themeColor"
             app:cornerRadius = "20dp"/>
 
     </LinearLayout>

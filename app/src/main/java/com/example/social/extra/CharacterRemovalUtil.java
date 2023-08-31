@@ -7,7 +7,7 @@ public class CharacterRemovalUtil {
 
     public static String removeCharacters(String input) {
         // Define the regex pattern
-        String pattern = "[.#\\$\\[\\]]";
+        String pattern = "[.#$\\[\\]]";
 
         // Create a Pattern object
         Pattern regex = Pattern.compile(pattern);

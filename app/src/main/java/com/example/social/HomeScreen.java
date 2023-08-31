@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.social.extra.CharacterRemovalUtil;
 import com.example.social.extra.Quotes;
 import com.example.social.surprise.AddPlayers;
+import com.example.social.utils.AndroidUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +34,9 @@ public class HomeScreen extends AppCompatActivity {
 
     FirebaseAuth auth;
     FirebaseUser user;
-    DatabaseReference userRef;
+    DatabaseReference userRef ;
+
+    String email;
 
 
     @Override
@@ -58,8 +61,9 @@ public class HomeScreen extends AppCompatActivity {
         user = auth.getCurrentUser();
 
         if (user != null) {
-            String email = user.getEmail();
-            userRef = FirebaseDatabase.getInstance().getReference().child("users").child(CharacterRemovalUtil.removeCharacters(email));
+            email = user.getEmail();
+            if (email != null)
+                userRef = FirebaseDatabase.getInstance().getReference().child("users").child(CharacterRemovalUtil.removeCharacters(email));
             userRef.child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -95,6 +99,13 @@ public class HomeScreen extends AppCompatActivity {
          */
     }
 
+    @Override
+    public void onBackPressed() {
+        userRef = FirebaseDatabase.getInstance().getReference().child("users").child(CharacterRemovalUtil.removeCharacters(email));
+        userRef.child("active").setValue(false);
+        super.onBackPressed();
+    }
+
     private void showLogoutConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Log Out")
@@ -103,6 +114,9 @@ public class HomeScreen extends AppCompatActivity {
                     // Perform logout operation
                     // For example, clear user session, navigate to login screen, etc.
                     startActivity(new Intent(HomeScreen.this, LoginActivity.class));
+                    userRef = FirebaseDatabase.getInstance().getReference().child("users").child(CharacterRemovalUtil.removeCharacters(email));
+                    userRef.child("active").setValue(false);
+                    AndroidUtils.showToast(getApplicationContext(),"User Logged Out Successfully!");
                     finish();
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> {
@@ -114,6 +128,20 @@ public class HomeScreen extends AppCompatActivity {
 
     public void showUserData() {
         Toast.makeText(this, "Making sure it works now!", Toast.LENGTH_SHORT).show();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("userEmail");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long count = snapshot.getChildrenCount();
+                String msg = "Current Children in this node : " + Long.toString(count);
+                Toast.makeText(HomeScreen.this, msg, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     // Greetings Text

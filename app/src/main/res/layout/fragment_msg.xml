@@ -16,7 +16,7 @@
         android:fontFamily="@font/aladin"
         android:text="@string/message"
         android:textAlignment="center"
-        android:textColor="@color/lavender"
+        android:textColor="@color/themeColor"
         android:textSize="100sp"
         app:layout_constraintBottom_toTopOf="@+id/profile_card"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/profile_card"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_height="wrap_content"
         android:background="@color/background"
         android:foregroundGravity="center"
         android:padding="15dp"
@@ -44,7 +44,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/lavender_border"
             android:orientation="vertical"
             android:padding="10dp">
@@ -58,21 +58,155 @@
                 android:layout_margin="10dp">
 
                 <ImageView
-                    android:id="@+id/profileImage_chatMenu"
+                    android:id="@+id/profileImage_chatMenu1"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="Profile Picture" />
 
                 <TextView
-                    android:id="@+id/showUsername_chatMenu"
+                    android:id="@+id/showUsername_chatMenu1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="16dp"
                     android:hint="userName"
+                    android:paddingRight="115dp"
                     android:fontFamily="@font/aladin"
                     android:textSize="25sp"
                     android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/user1_online"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:layout_height="match_parent"
+
+                    android:src="@drawable/ic_online" />
+                <ImageView
+                    android:id="@+id/user1_offline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_offline" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/lavender_border"
+                android:padding="10dp"
+                android:layout_margin="10dp">
+
+                <ImageView
+                    android:id="@+id/profileImage_chatMenu2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="Profile Picture" />
+
+                <TextView
+                    android:id="@+id/showUsername_chatMenu2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:paddingRight="115dp"
+                    android:hint="userName"
+                    android:fontFamily="@font/aladin"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/user2_online"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_online" />
+                <ImageView
+                    android:id="@+id/user2_offline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_offline" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/lavender_border"
+                android:padding="10dp"
+                android:layout_margin="10dp">
+
+                <ImageView
+                    android:id="@+id/profileImage_chatMenu3"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="Profile Picture" />
+
+                <TextView
+                    android:id="@+id/showUsername_chatMenu3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:paddingRight="115dp"
+                    android:hint="userName"
+                    android:fontFamily="@font/aladin"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/user3_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+
+                    android:src="@drawable/ic_online" />
+                <ImageView
+                    android:id="@+id/user3_offline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_offline" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/lavender_border"
+                android:padding="10dp"
+                android:layout_margin="10dp">
+
+                <ImageView
+                    android:id="@+id/profileImage_chatMenu4"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="Profile Picture" />
+
+                <TextView
+                    android:id="@+id/showUsername_chatMenu4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:paddingRight="115dp"
+                    android:hint="userName"
+                    android:fontFamily="@font/aladin"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/user4_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_online" />
+                <ImageView
+                    android:id="@+id/user4_offline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_offline" />
 
             </LinearLayout>
 

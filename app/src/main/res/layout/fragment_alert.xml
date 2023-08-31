@@ -16,7 +16,7 @@
         android:fontFamily="@font/aladin"
         android:text="@string/alerts"
         android:textAlignment="center"
-        android:textColor="@color/lavender"
+        android:textColor="@color/themeColor"
         android:textSize="100sp"
         app:layout_constraintBottom_toTopOf="@+id/profile_card"
         app:layout_constraintEnd_toEndOf="parent"

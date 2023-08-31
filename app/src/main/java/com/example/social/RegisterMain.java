@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.social.extra.CharacterRemovalUtil;
 import com.example.social.extra.CountUser;
+import com.example.social.extra.User;
+import com.example.social.utils.AndroidUtils;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,12 +37,14 @@ public class RegisterMain extends AppCompatActivity {
     DatabaseReference databaseReference;
     DatabaseReference userRef, dataRef;
 
-    EditText email, password, name, username;
+    EditText email, password, name, username, phone;
     Button register;
 
     String userId;
 
     long count;
+
+    private String txt_username, txt_email, txt_pass, txt_name, txt_phone; // User Class Variable References
 
     private CountUser countUser;
 
@@ -67,34 +72,45 @@ public class RegisterMain extends AppCompatActivity {
         name = findViewById(R.id.signup_name);
         username = findViewById(R.id.signup_username);
         password = findViewById(R.id.signup_password);
+        phone = findViewById(R.id.signup_phone);
         register = findViewById(R.id.signup_btn);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
+        register.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                register.performClick(); // Programmatically trigger login button click
+                return true;
+            }
+            return false;
+        });
+
         register.setOnClickListener(v -> {
 
-            String txt_username = username.getText().toString();
-            String txt_email = email.getText().toString();
-            String txt_pass = password.getText().toString();
-            String txt_name = name.getText().toString();
+            txt_username = username.getText().toString();
+            txt_email = email.getText().toString();
+            txt_pass = password.getText().toString();
+            txt_name = name.getText().toString();
+            txt_phone = "+91" + phone.getText().toString();
+
 
             String email = CharacterRemovalUtil.removeCharacters(txt_email);
 
 //            editor.putString("username",txt_username);
 //            editor.putString("name",txt_name);
 
-//            User register = new User(txt_email, txt_pass);
+            User register = new User(txt_email, txt_name, txt_username, txt_pass);
 
             if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_pass)) {
                 Toast.makeText(RegisterMain.this, "Empty Credentials", Toast.LENGTH_SHORT).show();
             } else if (txt_pass.length() < 3) {
                 Toast.makeText(RegisterMain.this, "Password too short!", Toast.LENGTH_SHORT).show();
             } else {
-
+                checkDb();
                 registerUser(txt_email, txt_pass); // User Registration using Firebase Authentication
-                storeToDB(email, txt_name, txt_username, txt_pass); // Store User Data to Firebase Database
+                storeToDB(email, txt_email, txt_name, txt_username, txt_phone, txt_pass); // Store User Data to Firebase Database
                 getChildCount(email); // Method to get child count
 
 //                String userId = ref.child("users").push().getKey();
@@ -103,18 +119,42 @@ public class RegisterMain extends AppCompatActivity {
         });
     }
 
+    private void checkDb() {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    count = snapshot.getChildrenCount();
+                    count++;
+                } else {
+                    count = 0;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
     private void getChildCount(String email) {
 
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                count = snapshot.getChildrenCount();
+
+
                 String idKey = databaseReference.child("users").child(email).child("id").getKey();
                 String countCompare = Long.toString(count);
 
-                if (idKey.equals(countCompare)) {
+                if (idKey != null && idKey.equals(countCompare)) {
                     databaseReference.child(email).child("id").setValue(countCompare);
                 }
+
             }
 
             @Override
@@ -127,27 +167,30 @@ public class RegisterMain extends AppCompatActivity {
 
     }
 
-    private void storeToDB(String email, String name, String username, String password) {
+    private void storeToDB(String emailPath, String email, String name, String username, String phone, String password) {
 
-        if (user != null) {
-            userId = user.getUid();
-            int currentCount = countUser.getCount();
-            count++;
 
-            userRef = databaseReference.child("users").child(email);
-            userRef.child("id").setValue(currentCount);
-            userRef.child("name").setValue(name);
-            userRef.child("username").setValue(username);
-            userRef.child("password").setValue(password);
+        int currentCount = countUser.getCount();
 
-            dataRef = databaseReference.child("userEmail").child(String.valueOf((currentCount)));
-            dataRef.child("id").setValue(currentCount);
-            dataRef.child("email").setValue(email);
+        // Above code is for using shared preferences to save user count data locally
 
-            countUser.incrementCount();
-            saveCountToSharedPreferences(countUser.getCount());
 
-        }
+        userRef = databaseReference.child("users").child(emailPath);
+        userRef.child("id").setValue(currentCount);
+        userRef.child("email").setValue(email);
+        userRef.child("name").setValue(name);
+        userRef.child("username").setValue(username);
+        userRef.child("phone").setValue(phone);
+        userRef.child("password").setValue(password);
+
+        dataRef = databaseReference.child("userEmail").child(String.valueOf((currentCount)));
+        dataRef.child("id").setValue(currentCount);
+        dataRef.child("email").setValue(email);
+
+        countUser.incrementCount();
+        saveCountToSharedPreferences(countUser.getCount());
+
+
     }
 
     private void saveCountToSharedPreferences(int count) {
@@ -163,7 +206,11 @@ public class RegisterMain extends AppCompatActivity {
                 addOnCompleteListener(RegisterMain.this, task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(RegisterMain.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterMain.this, LoginActivity.class));
+
+                        Intent intent = new Intent(RegisterMain.this, LoginActivity.class);
+                        intent.putExtra("phone", txt_phone);
+                        startActivity(intent);
+
                         finish();
                     } else {
 
@@ -171,7 +218,8 @@ public class RegisterMain extends AppCompatActivity {
                         if (task.getException() != null && task.getException().getMessage() != null
                                 && task.getException().getMessage().contains("email address is already in use")) {
                             // Email already in use, display a toast
-                            Toast.makeText(RegisterMain.this, "User already exists. Try logging in.", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(RegisterMain.this, "User already exists. Try logging in.", Toast.LENGTH_SHORT).show();
+                            AndroidUtils.showToast(getApplicationContext(), "User already exists. Try logging in");
                         } else {
                             // Other registration failure, handle accordingly
                             handleRegistrationFailure(task);

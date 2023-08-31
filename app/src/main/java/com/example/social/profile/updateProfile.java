@@ -116,7 +116,10 @@ public class updateProfile extends AppCompatActivity {
                     dbHelper.insertProfilePicture(userId, Arrays.toString(imageBytes));
                     profileImageView.setImageBitmap(bitmap);
                     imageSelected = true;
+                }else{
+                    Toast.makeText(this, "Please Select a profile picture to proceed!", Toast.LENGTH_SHORT).show();
                 }
+                
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -236,7 +239,6 @@ public class updateProfile extends AppCompatActivity {
         if (selectedId != -1) {
             RadioButton selectedRadioButton = findViewById(selectedId);
             String gender = selectedRadioButton.getText().toString();
-
             Map<String, Object> updateData = new HashMap<>();
             updateData.put("gender", gender);
             userReference.child(userId).updateChildren(updateData);
@@ -244,7 +246,7 @@ public class updateProfile extends AppCompatActivity {
     }
 
     public void showUserData() {
-        userReference.child(userId).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+        userReference.child(userId).child("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = snapshot.getValue(String.class);
@@ -257,7 +259,7 @@ public class updateProfile extends AppCompatActivity {
             }
         });
 
-        userReference.child(userId).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+        userReference.child(userId).child("username").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String uname = snapshot.getValue(String.class);

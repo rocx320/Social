@@ -112,7 +112,7 @@ public class ProfileFragment extends Fragment {
 
         // Fetch email
 
-        ref.child(userId).child("email").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child(userId).child("email").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -128,7 +128,7 @@ public class ProfileFragment extends Fragment {
 
         // Fetch Date of Birth
 
-        ref.child(userId).child("DOB").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child(userId).child("DOB").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -144,7 +144,7 @@ public class ProfileFragment extends Fragment {
 
         // Fetch gender
 
-        ref.child(userId).child("gender").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.child(userId).child("gender").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {

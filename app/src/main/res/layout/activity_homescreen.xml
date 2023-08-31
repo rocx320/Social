@@ -29,7 +29,7 @@
             android:fontFamily="@font/aladin"
             android:text="@string/welcome"
             android:textAlignment="center"
-            android:textColor="@color/lavender"
+            android:textColor="@color/themeColor"
             android:textSize="95sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,7 @@
                 android:paddingBottom="10dp"
                 android:text="@string/hey"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="@color/themeColor"
                 android:textSize="45sp" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:fontFamily="@font/aladin"
                 android:paddingBottom="10dp"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="@color/themeColor"
                 android:textSize="45sp" />
 
             <TextView
@@ -88,7 +88,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/aladin"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="@color/themeColor"
                 android:textSize="45sp" />
 
         </LinearLayout>
@@ -104,7 +104,7 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:textAlignment="center"
-        android:textColor="@color/lavender"
+        android:textColor="@color/themeColor"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

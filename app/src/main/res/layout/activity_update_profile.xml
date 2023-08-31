@@ -15,7 +15,7 @@
         android:fontFamily="@font/aladin"
         android:paddingBottom="5dp"
         android:text="Update Profile"
-        android:textColor="@color/lavender"
+        android:textColor="@color/themeColor"
         android:textSize="69sp"
         app:layout_constraintBottom_toTopOf="@+id/cardView3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +103,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"
+                android:textColor="@color/themeColor"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -173,7 +173,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="Male"
-                    android:textColor="@color/lavender"
+                    android:textColor="@color/themeColor"
                     android:textSize="20sp" />
 
                 <RadioButton
@@ -184,7 +184,7 @@
                     android:fontFamily="@font/aladin"
                     android:gravity="center"
                     android:text="Female"
-                    android:textColor="@color/lavender"
+                    android:textColor="@color/themeColor"
                     android:textSize="20sp" />
 
                 <RadioButton
@@ -195,7 +195,7 @@
                     android:fontFamily="@font/aladin"
                     android:gravity="center"
                     android:text="Other"
-                    android:textColor="@color/lavender"
+                    android:textColor="@color/themeColor"
                     android:textSize="20sp" />
 
             </RadioGroup>

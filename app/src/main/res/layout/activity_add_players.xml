@@ -33,7 +33,7 @@
                 android:fontFamily="@font/aladin"
                 android:textSize="36sp"
                 android:textStyle="bold"
-                android:textColor="@color/lavender"/>
+                android:textColor="@color/themeColor"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                 android:maxLines="1"
                 android:textStyle="italic"
                 android:hint="Enter player one name"
-                android:textColor="@color/lavender"
+                android:textColor="@color/themeColor"
                 android:drawableLeft="@drawable/cross"
                 android:drawablePadding="8dp"/>
 
@@ -61,7 +61,7 @@
                 android:fontFamily="@font/aladin"
                 android:textStyle="italic"
                 android:hint="Enter player two name"
-                android:textColor="@color/lavender"
+                android:textColor="@color/themeColor"
                 android:drawableLeft="@drawable/o"
                 android:drawablePadding="8dp"/>
 

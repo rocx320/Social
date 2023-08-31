@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.social.extra.CharacterRemovalUtil;
 import com.example.social.extra.LocalAccountManager;
 import com.example.social.extra.UserUtil;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,12 +27,14 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
 
     EditText loginUsername, loginPassword;
-    Button loginBtn;
+    Button loginBtn,loginPhoneBtn;
     TextView signupRedirectText;
 
     FirebaseAuth auth;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference usersRef = ref.child("users");
     String userId = user != null ? user.getUid() : null;
 
     private LocalAccountManager localAccountManager;
@@ -44,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         loginUsername = findViewById(R.id.login_username);
         loginPassword = findViewById(R.id.login_password);
         loginBtn = findViewById(R.id.login_btn);
+        loginPhoneBtn = findViewById(R.id.login_addPhone);
         signupRedirectText = findViewById(R.id.signup_redirect);
 
         auth = FirebaseAuth.getInstance();
@@ -72,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        });
 
+        loginPhoneBtn.setOnClickListener(v -> {startActivity(new Intent(this, LoginOtp.class));});
 
         loginBtn.setOnClickListener(v -> {
             String txt_email = loginUsername.getText().toString().trim();
@@ -123,6 +128,10 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, HomeScreen.class));
                         finish();
+
+                        String emailText = CharacterRemovalUtil.removeCharacters(txtEmail);
+                        usersRef.child(emailText).child("active").setValue(true);
+
                     } else {
                         // Sign in failed
                         if (task.getException() != null &&
@@ -137,12 +146,12 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    // To change Email login to Username name login call this function and comment out the login user using authentication
+
     private void checkUser() {
         String uname = loginUsername.getText().toString().trim();
         String pass = loginPassword.getText().toString().trim();
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference usersRef = ref.child("users");
 
         if (user != null) {
             String userId = user.getUid();

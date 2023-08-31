@@ -6,7 +6,8 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.CAMERA"
+    <uses-permission
+        android:name="android.permission.CAMERA"
         tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,6 +23,9 @@
         android:theme="@style/Theme.Social"
         tools:targetApi="33">
         <activity
+            android:name=".LoginOtp"
+            android:exported="false" />
+        <activity
             android:name=".profile.updateProfile"
             android:exported="false" />
         <activity
@@ -36,7 +40,6 @@
         <activity
             android:name=".LaunchFragment"
             android:exported="false" />
-
         <activity
             android:name=".RegisterMain"
             android:exported="false" />
